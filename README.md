@@ -3,12 +3,12 @@
 A modern, fast and responsive billing/invoice generator web app built using React, Vite, and jsPDF.  
 It allows users to create invoices with item-wise discounts, GST calculations, and export them as PDF.
 
----
+
 
 ## 🚀 Live Demo
 👉 https://your-live-link.netlify.app
 
----
+
 
 ## ✨ Features
 
@@ -23,7 +23,7 @@ It allows users to create invoices with item-wise discounts, GST calculations, a
 - 📱 Fully responsive UI
 - ⚡ Fast Vite-based performance
 
----
+
 
 ## 🛠️ Tech Stack
 
@@ -34,7 +34,6 @@ It allows users to create invoices with item-wise discounts, GST calculations, a
 - jspdf-autotable 📊
 - React Icons 🔥
 
----
 
-## 📂 Project Structure
+
 
