@@ -5,14 +5,13 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-import LoginPage from "./components/LoginPage";
-import { numberToWords } from "./utils/numberToWords";
-import Dashboard from "./components/Dashboard";
-import BillingForm from "./components/BillingForm";
-import ItemForm from "./components/ItemForm";
-import ItemTable from "./components/ItemTable";
-import Summary from "./components/Summary";
-import Buttons from "./components/Buttons";
+import LoginPage from "./Components/LoginPage";
+import Dashboard from "./Components/Dashboard";
+import BillingForm from "./Components/BillingForm";
+import ItemForm from "./Components/ItemForm";
+import ItemTable from "./Components/ItemTable";
+import Summary from "./Components/Summary";
+import Buttons from "./Components/Buttons";
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
