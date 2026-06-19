@@ -52,7 +52,7 @@ function App() {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/products?user_id=${currentUser.id}`
+        `https://billing-software-7gdo.onrender.com/api/products?user_id=${currentUser.id}`
       );
       setProducts(res.data);
     } catch (error) {
@@ -73,7 +73,7 @@ function App() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/products", {
+      await axios.post("https://billing-software-7gdo.onrender.com/api/products", {
         ...newProduct,
         user_id: user.id,
       });
@@ -97,7 +97,7 @@ function App() {
 
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await axios.delete(`https://billing-software-7gdo.onrender.com/api/products/${id}`);
       await fetchProducts(user);
       alert("Product deleted successfully");
     } catch (error) {
