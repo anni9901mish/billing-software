@@ -1,39 +1,95 @@
-# 🧾 Billing Software (React + Vite)
+# Retail Inventory Manager
 
-A modern, fast and responsive billing/invoice generator web app built using React, Vite, and jsPDF.  
-It allows users to create invoices with item-wise discounts, GST calculations, and export them as PDF.
+A full-stack inventory and billing management application built using React, Node.js, Express, and Supabase.
 
+This project was developed to simplify product inventory management and invoice generation for small businesses and retail stores. Users can maintain their own inventory, generate GST invoices, track stock levels, and export professional PDF bills.
 
+## Features
 
-## 🚀 Live Demo
-👉 https://your-live-link.netlify.app
+* User Authentication using Supabase
+* Separate inventory for each user
+* Add, delete and manage products
+* Product Code, Manufacturing Date and Expiry Date support
+* Low stock alerts
+* GST invoice generation
+* PDF bill export
+* Dashboard with inventory statistics
+* Dark/Light mode
+* Responsive UI
 
+## Tech Stack
 
+### Frontend
 
-## ✨ Features
+* React.js
+* Vite
+* Framer Motion
+* Axios
+* Tailwind CSS
 
-- 🧾 Create invoices in real-time
-- 📦 Add multiple products/items
-- 💸 Individual product discount support
-- 📊 Automatic subtotal, discount, GST calculation
-- 🧮 CGST & SGST support (5% GST system)
-- 🧾 PDF invoice generation (jsPDF + autoTable)
-- 💾 Auto-save data (if enabled)
-- 🗑️ Remove items easily
-- 📱 Fully responsive UI
-- ⚡ Fast Vite-based performance
+### Backend
 
+* Node.js
+* Express.js
 
+### Database & Authentication
 
-## 🛠️ Tech Stack
+* Supabase
 
-- React.js ⚛️
-- Vite ⚡
-- Tailwind CSS 🎨
-- jsPDF 📄
-- jspdf-autotable 📊
-- React Icons 🔥
+### PDF Generation
 
+* jsPDF
+* jspdf-autotable
 
+## Screenshots
 
+Add screenshots of:
 
+* Login Page
+* Dashboard
+* Product Management
+* Billing Section
+* Generated Invoice
+
+## Installation
+
+Frontend:
+
+```bash
+npm install
+npm run dev
+```
+
+Backend:
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+## Environment Variables
+
+Create a `.env` file inside the backend folder:
+
+```env
+SUPABASE_URL=https://muvxafwfxstdvhxavgdl.supabase.com
+SUPABASE_KEY="sb_publishable_oKpQG_OmM0HfusYoGF_Y7g_6PRJLEIE";
+PORT=5000
+```
+
+## Future Improvements
+
+* Google Login
+* Invoice History
+* Sales Reports
+* Barcode Scanner
+* Email Invoice Sharing
+
+## Author
+
+Animesh Mishra
+
+MCA Student | React Developer | Full Stack Enthusiast
+
+GitHub: https://github.com/anni9901mish
