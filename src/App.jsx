@@ -106,49 +106,61 @@ function App() {
     }
   };
 
-  const addItem = () => {
-    if (!name || !price || !qty) {
-      alert("Fill all fields");
-      return;
-    }
+ const addItem = async () => {
+  if (!name || !price || !qty) {
+    alert("Fill all fields");
+    return;
+  }
 
-    const selectedProduct = products.find((product) => product.name === name);
+  const selectedProduct = products.find(
+    (product) => product.name === name
+  );
 
-    if (!selectedProduct) {
-      alert("Product not found");
-      return;
-    }
+  if (!selectedProduct) {
+    alert("Product not found");
+    return;
+  }
 
-    if (Number(qty) > selectedProduct.stock) {
-      alert(`Only ${selectedProduct.stock} stock available`);
-      return;
-    }
+  if (Number(qty) > Number(selectedProduct.stock)) {
+    alert(`Only ${selectedProduct.stock} stock available`);
+    return;
+  }
 
-    const itemTotal = Number(price) * Number(qty);
-    const discountAmount = (itemTotal * Number(discount || 0)) / 100;
-    const finalAmount = itemTotal - discountAmount;
+  const remainingStock =
+    Number(selectedProduct.stock) - Number(qty);
 
-    const newItem = {
-      name,
-      price: Number(price),
-      qty: Number(qty),
-      discount: Number(discount || 0),
-      discountAmount,
-      finalAmount,
-      productCode,
-      mfgDate,
-      expiry,
-    };
+    const updatedSold =
+  Number(selectedProduct.sold || 0) + Number(qty);
+
+  const itemTotal = Number(price) * Number(qty);
+  const discountAmount =
+    (itemTotal * Number(discount || 0)) / 100;
+  const finalAmount = itemTotal - discountAmount;
+
+  const newItem = {
+    name,
+    price: Number(price),
+    qty: Number(qty),
+    discount: Number(discount || 0),
+    discountAmount,
+    finalAmount,
+    productCode,
+    mfgDate,
+    expiry,
+  };
+
+  try {
+    await axios.put(
+      `https://billing-software-7gdo.onrender.com/api/products/${selectedProduct.id}`,
+      {
+        stock: remainingStock,
+        sold: updatedSold,
+      }
+    );
 
     setItems([...items, newItem]);
 
-    setProducts(
-      products.map((product) =>
-        product.name === name
-          ? { ...product, stock: Number(product.stock) - Number(qty) }
-          : product
-      )
-    );
+    await fetchProducts(user);
 
     setName("");
     setPrice("");
@@ -157,7 +169,11 @@ function App() {
     setProductCode("");
     setMfgDate("");
     setExpiry("");
-  };
+  } catch (error) {
+    console.log(error);
+    alert("Stock update nahi ho paaya");
+  }
+};
 
   const removeItem = (index) => {
     const itemToRemove = items[index];
@@ -187,6 +203,42 @@ function App() {
   const cgst = (taxable * gstRate) / 2 / 100;
   const sgst = (taxable * gstRate) / 2 / 100;
   const total = taxable + cgst + sgst;
+
+  const numberToWords = (num) => {
+  const ones = [
+    "", "One", "Two", "Three", "Four",
+    "Five", "Six", "Seven", "Eight", "Nine",
+    "Ten", "Eleven", "Twelve", "Thirteen",
+    "Fourteen", "Fifteen", "Sixteen",
+    "Seventeen", "Eighteen", "Nineteen"
+  ];
+
+  const tens = [
+    "", "", "Twenty", "Thirty", "Forty",
+    "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
+  ];
+
+  if (num < 20) return ones[num];
+
+  if (num < 100)
+    return tens[Math.floor(num / 10)] + " " + ones[num % 10];
+
+  if (num < 1000)
+    return (
+      ones[Math.floor(num / 100)] +
+      " Hundred " +
+      numberToWords(num % 100)
+    );
+
+  if (num < 100000)
+    return (
+      numberToWords(Math.floor(num / 1000)) +
+      " Thousand " +
+      numberToWords(num % 1000)
+    );
+
+  return num.toString();
+};
 
   const generatePDF = () => {
     if (items.length === 0) {
@@ -398,7 +450,7 @@ function App() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className={`rounded-[2rem] border backdrop-blur-2xl p-5 md:p-8 ${shellClass}`}
         >
-          <Dashboard products={products} darkMode={darkMode} />
+          <Dashboard products={products} items={items} darkMode={darkMode} />
 
           <motion.section
             whileHover={{ y: -4 }}

@@ -13,7 +13,7 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import {
   Boxes,
   Warehouse,
-  AlertTriangle,
+  ShoppingCart,
   IndianRupee,
   Activity,
 } from "lucide-react";
@@ -27,26 +27,27 @@ ChartJS.register(
   Legend
 );
 
-function Dashboard({ products, darkMode }) {
+function Dashboard({ products, items = [], darkMode }) {
   const totalProducts = products.length;
 
-  const totalStock = products.reduce(
+  const remainingStock = products.reduce(
     (acc, product) => acc + Number(product.stock),
     0
   );
 
-  const lowStockProducts = products.filter(
-    (product) => Number(product.stock) <= 10
-  ).length;
+ const soldStock = products.reduce(
+  (acc, product) => acc + Number(product.sold || 0),
+  0
+);
 
   const inventoryValue = products.reduce(
-    (acc, product) => acc + Number(product.price) * Number(product.stock),
+    (acc, product) =>
+      acc + Number(product.price) * Number(product.stock),
     0
   );
 
-  const availableProducts = totalProducts - lowStockProducts;
-
   const textColor = darkMode ? "#ffffff" : "#0f172a";
+
   const gridColor = darkMode
     ? "rgba(255,255,255,0.12)"
     : "rgba(15,23,42,0.12)";
@@ -59,7 +60,7 @@ function Dashboard({ products, darkMode }) {
     labels: products.map((product) => product.name),
     datasets: [
       {
-        label: "Stock Quantity",
+        label: "Remaining Stock",
         data: products.map((product) => Number(product.stock)),
         backgroundColor: [
           "rgba(168,85,247,0.9)",
@@ -88,10 +89,10 @@ function Dashboard({ products, darkMode }) {
   };
 
   const doughnutData = {
-    labels: ["Available", "Low Stock"],
+    labels: ["Remaining Stock", "Sold Items"],
     datasets: [
       {
-        data: [availableProducts, lowStockProducts],
+        data: [remainingStock, soldStock],
         backgroundColor: [
           "rgba(34,197,94,0.95)",
           "rgba(239,68,68,0.95)",
@@ -184,22 +185,22 @@ function Dashboard({ products, darkMode }) {
       blob: "bg-purple-500/40",
     },
     {
-      title: "Total Stock",
-      value: totalStock,
+      title: "Remaining Stock",
+      value: remainingStock,
       icon: <Warehouse />,
       glow: "from-blue-500 to-cyan-400",
       blob: "bg-cyan-500/40",
     },
     {
-      title: "Low Stock Items",
-      value: lowStockProducts,
-      icon: <AlertTriangle />,
+      title: "Sold Items",
+      value: soldStock,
+      icon: <ShoppingCart />,
       glow: "from-red-500 to-orange-400",
       blob: "bg-red-500/40",
     },
     {
       title: "Inventory Value",
-      value: `₹${inventoryValue.toFixed(2)}`,
+      value: `Rs. ${inventoryValue.toFixed(2)}`,
       icon: <IndianRupee />,
       glow: "from-emerald-500 to-lime-400",
       blob: "bg-lime-500/40",
@@ -219,7 +220,7 @@ function Dashboard({ products, darkMode }) {
             </p>
 
             <h2 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-cyan-300 via-lime-300 to-yellow-300 bg-clip-text text-transparent">
-               Inventory Dashboard
+              Inventory Dashboard
             </h2>
           </div>
 
@@ -283,7 +284,7 @@ function Dashboard({ products, darkMode }) {
             <div className="relative">
               <h3 className="text-xl font-black">Stock by Product</h3>
               <p className="text-sm opacity-65 mb-6">
-                Product-wise available inventory quantity
+                Product-wise remaining inventory quantity
               </p>
 
               <Bar data={barData} options={barOptions} />
@@ -302,7 +303,7 @@ function Dashboard({ products, darkMode }) {
             <div className="relative">
               <h3 className="text-xl font-black">Stock Status</h3>
               <p className="text-sm opacity-65 mb-6">
-                Available products versus low-stock products
+                Remaining stock versus sold items
               </p>
 
               <Doughnut data={doughnutData} options={doughnutOptions} />
