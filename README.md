@@ -41,15 +41,7 @@ This project was developed to simplify product inventory management and invoice 
 * jsPDF
 * jspdf-autotable
 
-## Screenshots
 
-Add screenshots of:
-
-* Login Page
-* Dashboard
-* Product Management
-* Billing Section
-* Generated Invoice
 
 ## Installation
 
